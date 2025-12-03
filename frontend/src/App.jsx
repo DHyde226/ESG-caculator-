@@ -1,7 +1,7 @@
 // src/App.js
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
-import Documentation from "./components/Documentation";
+import Documentation from "./components/About";
 import RegisterLogin from "./components/RegisterLogin";
 import ESGForm from "./components/ESGForm";
 import ESGHistory from "./components/ESGHistory";
