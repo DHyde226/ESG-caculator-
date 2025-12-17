@@ -16,24 +16,23 @@ const ESGHistory = ({ token }) => {
       setLoading(false);
       return;
     }
-
     fetchHistory();
   }, [token]);
 
   const fetchHistory = () => {
     setLoading(true);
     setError(null);
+
     axios
       .get(`${apiBase}/history`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
         if (!Array.isArray(res.data)) {
-          setError("Invalid data format received (expected array)");
+          setError("Invalid data format received");
           setHistory([]);
         } else {
           setHistory(res.data);
-          setError(null);
         }
       })
       .catch((err) => {
@@ -62,9 +61,9 @@ const ESGHistory = ({ token }) => {
   };
 
   // ----------------------------
-  // 📄 Generate PDF History File
+  // 📊 EXPORT TO EXCEL
   // ----------------------------
-   const exportToExcel = async () => {
+  const exportToExcel = async () => {
     if (!history.length) {
       alert("No history to export");
       return;
@@ -73,61 +72,40 @@ const ESGHistory = ({ token }) => {
     const workbook = new ExcelJS.Workbook();
     const sheet = workbook.addWorksheet("ESG History");
 
-    // Collect all keys from history entries (so every field/category is included)
-    const keySet = new Set();
+    sheet.columns = [
+      { header: "Submission Date", key: "submissionDate", width: 25 },
+      { header: "Total Score", key: "totalScore", width: 15 },
+      { header: "Grade", key: "grade", width: 15 },
+      { header: "Total tCO₂e", key: "currentTotal_tCO2e", width: 20 },
+      { header: "Full Results (JSON)", key: "results", width: 60 },
+    ];
+
     history.forEach((entry) => {
-      Object.keys(entry).forEach((key) => keySet.add(key));
-    });
+      const totalEmissions = Number(
+        entry.results?.sections?.section5?.breakdown?.totals?.currentTotal_tCO2e
 
-    // Filter out internal Mongo / system fields you don't care about
-    const excludedKeys = new Set(["_id", "__v"]);
-    const columns = Array.from(keySet).filter((k) => !excludedKeys.has(k));
+      );
 
-    // Header row
-    sheet.addRow(columns);
-
-    // Data rows
-    history.forEach((entry) => {
-      const row = columns.map((key) => {
-        const value = entry[key];
-
-        if (value == null) return "";
-
-        // Format dates nicely
-        if (key === "submittedAt" || key === "createdAt" || key === "updatedAt") {
-          try {
-            return new Date(value).toLocaleString();
-          } catch {
-            return value;
-          }
-        }
-
-        // If it's an object (e.g. nested), stringify it
-        if (typeof value === "object") {
-          return JSON.stringify(value);
-        }
-
-        return value;
+      sheet.addRow({
+        submissionDate: new Date(
+          entry.submissionDate || entry.createdAt
+        ).toLocaleString(),
+        totalScore: Number(entry?.results?.totalScore) || 0,
+        grade: entry?.results?.grade || "N/A",
+        currentTotal_tCO2e:
+          totalEmissions === undefined || Number.isNaN(totalEmissions)
+            ? 0
+            : totalEmissions,
+        results: JSON.stringify(entry.results),
       });
-
-      sheet.addRow(row);
     });
 
-    // Auto-size columns for readability
-    sheet.columns.forEach((column) => {
-      let maxLength = 10;
-      column.eachCell({ includeEmpty: true }, (cell) => {
-        const cellValue = cell.value ? cell.value.toString() : "";
-        maxLength = Math.max(maxLength, cellValue.length);
-      });
-      column.width = maxLength + 2;
-    });
-
-    // Generate Excel file buffer and trigger download
     const buffer = await workbook.xlsx.writeBuffer();
     const blob = new Blob([buffer], {
-      type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      type:
+        "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
     });
+
     saveAs(blob, "ESG_History.xlsx");
   };
 
@@ -138,7 +116,6 @@ const ESGHistory = ({ token }) => {
     <div>
       <h2>ESG Score History</h2>
 
-      {/* NEW EXCEL BUTTON */}
       <button onClick={exportToExcel} style={{ marginBottom: "15px" }}>
         📊 Download Excel
       </button>
@@ -147,18 +124,38 @@ const ESGHistory = ({ token }) => {
         <p>No history yet.</p>
       ) : (
         <ul>
-          {history.map((entry) => (
-            <li key={entry._id}>
-              🧮 Score: {entry.totalScore} | 📅 Date:{" "}
-              {new Date(entry.submittedAt || entry.createdAt).toLocaleString()}
-              <button
-                onClick={() => handleDelete(entry._id)}
-                style={{ marginLeft: "10px" }}
-              >
-                Delete
-              </button>
-            </li>
-          ))}
+          {history.map((entry) => {
+            const totalEmissionsRaw =
+              entry.results?.sections?.section5?.breakdown?.totals?.currentTotal_tCO2e
+
+
+            const totalEmissions =
+              totalEmissionsRaw === undefined || totalEmissionsRaw === null
+                ? 0
+                : Number(totalEmissionsRaw);
+
+            return (
+              <li key={entry._id} style={{ marginBottom: "10px" }}>
+                🧮 <strong>Score:</strong>{" "}
+                {Number(entry?.results?.totalScore) || 0} (
+                <strong>{entry?.results?.grade || "N/A"}</strong>)
+                <br />
+                🌍 <strong>Total tCO₂e:</strong> {totalEmissions}
+                <br />
+                📅{" "}
+                {new Date(
+                  entry.submissionDate || entry.createdAt
+                ).toLocaleString()}
+                <br />
+                <button
+                  onClick={() => handleDelete(entry._id)}
+                  style={{ marginTop: "5px" }}
+                >
+                  Delete
+                </button>
+              </li>
+            );
+          })}
         </ul>
       )}
     </div>

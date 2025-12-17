@@ -6,7 +6,7 @@ const cors = require("cors");
 const app = express();
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || "http://172.18.0.4:5173", // Or the correct frontend URL
+    origin: process.env.CLIENT_URL || "http://localhost:5173", // Or the correct frontend URL
     credentials: true,
   })
 );
