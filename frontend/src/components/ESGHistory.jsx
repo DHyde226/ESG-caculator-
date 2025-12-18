@@ -73,7 +73,7 @@ const ESGHistory = ({ token }) => {
     const sheet = workbook.addWorksheet("ESG History");
 
     sheet.columns = [
-      { header: "Submission Date", key: "submissionDate", width: 25 },
+      { header: "Reporting Date", key: "submissionDate", width: 25 },
       { header: "Total Score", key: "totalScore", width: 15 },
       { header: "Grade", key: "grade", width: 15 },
       { header: "Total tCO₂e", key: "currentTotal_tCO2e", width: 20 },
@@ -89,7 +89,8 @@ const ESGHistory = ({ token }) => {
       sheet.addRow({
         submissionDate: new Date(
           entry.submissionDate || entry.createdAt
-        ).toLocaleString(),
+        ).toLocaleDateString("en-CA"),
+
         totalScore: Number(entry?.results?.totalScore) || 0,
         grade: entry?.results?.grade || "N/A",
         currentTotal_tCO2e:
@@ -136,16 +137,17 @@ const ESGHistory = ({ token }) => {
 
             return (
               <li key={entry._id} style={{ marginBottom: "10px" }}>
-                🧮 <strong>Score:</strong>{" "}
+                <strong>Score:</strong>{" "}
                 {Number(entry?.results?.totalScore) || 0} (
                 <strong>{entry?.results?.grade || "N/A"}</strong>)
                 <br />
-                🌍 <strong>Total tCO₂e:</strong> {totalEmissions}
+                <strong>Total tCO₂e:</strong> {totalEmissions}
                 <br />
-                📅{" "}
+                <strong>Reporting Date:</strong>{" "}
                 {new Date(
                   entry.submissionDate || entry.createdAt
-                ).toLocaleString()}
+                ).toLocaleDateString("en-CA")}
+
                 <br />
                 <button
                   onClick={() => handleDelete(entry._id)}

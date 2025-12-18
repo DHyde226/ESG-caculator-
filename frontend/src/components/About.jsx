@@ -2,7 +2,7 @@ import React from "react";
 
 const About = () => (
   <div style={{ padding: "1rem", maxWidth: "900px", margin: "auto" }}>
-    <h1>🏢 About the ESG Scoring Application</h1>
+    <h1>About the ESG Scoring Application</h1>
 
     <h2>1. Mission Statement</h2>
     <p>
@@ -47,7 +47,7 @@ const About = () => (
       readiness.
     </p>
 
-    <h3>📘 Greenhouse Gas Protocol (GHG Protocol)</h3>
+    <h3>Greenhouse Gas Protocol (GHG Protocol)</h3>
     <p>
       The calculator incorporates emissions measurement principles from the
       GHG Protocol, including:
@@ -64,7 +64,7 @@ const About = () => (
       across both private and public sectors.
     </p>
 
-    <h3>🏦 European Investment Bank (EIB) Standards</h3>
+    <h3>European Investment Bank (EIB) Standards</h3>
     <p>
       Our scoring framework also integrates the structure and expectations set
       by the European Investment Bank’s Environmental and Social Standards.
@@ -98,7 +98,7 @@ const About = () => (
       and climate responsibility.
     </p>
 
-    <h3>📄 Additional Documentation Sources</h3>
+    <h3>Additional Documentation Sources</h3>
     <ul>
       <li>EU Taxonomy for Sustainable Activities</li>
       <li>CSRD (Corporate Sustainability Reporting Directive)</li>
@@ -112,14 +112,14 @@ const About = () => (
       ensure scalability, security, and audit-ready performance.
     </p>
 
-    <h3>⚛️ Frontend — React</h3>
+    <h3>Frontend — React</h3>
     <ul>
       <li>Responsive and modular components for intuitive ESG data entry.</li>
       <li>Axios used for communicating with secured backend endpoints via JWT.</li>
       <li>User dashboard, ESG forms, data tables, and documentation views.</li>
     </ul>
 
-    <h3>🖥️ Backend — Express.js</h3>
+    <h3>Backend — Express.js</h3>
     <ul>
       <li>
         Node.js + Express architecture featuring controllers, middleware, 
@@ -129,44 +129,26 @@ const About = () => (
       <li>Designed for long-term scalability as ESG standards evolve.</li>
     </ul>
 
-    <h3>🗄️ Database — MongoDB (Mongoose)</h3>
+    <h3>Database — MongoDB (Mongoose)</h3>
     <ul>
       <li>Stores user accounts, ESG submissions, and historical scoring data.</li>
       <li>Mongoose schemas ensure data consistency and validation.</li>
     </ul>
 
-    <h3>🔐 Security — JWT Authentication</h3>
+    <h3>Security — JWT Authentication</h3>
     <ul>
       <li>All protected routes require token-based authentication.</li>
       <li>Stateless design compatible with containerized deployments.</li>
     </ul>
 
-    <h3>🐳 Docker-Based Infrastructure</h3>
+    <h3>Docker-Based Infrastructure</h3>
     <ul>
       <li>Three-container architecture: frontend, backend, and MongoDB.</li>
       <li>
         Docker Compose orchestrates all services into a unified environment.
       </li>
     </ul>
-
-    <h2>5. Our Vision</h2>
-    <p>
-      As ESG reporting requirements continue to expand, our long-term vision is
-      to develop a comprehensive sustainability management platform featuring:
-    </p>
-
-    <ul>
-      <li>Automated CSRD-aligned sustainability reports</li>
-      <li>Industry benchmark dashboards</li>
-      <li>AI-powered ESG risk analytics</li>
-      <li>Support for multi-facility and multi-entity reporting</li>
-    </ul>
-
-    <p>
-      Our goal is to make credible, standards-aligned ESG tools accessible to all
-      organizations—without enterprise-level complexity or cost.
-    </p>
-        <h2>📥 Download ESG Documentation</h2>
+        <h2>Download ESG Documentation</h2>
     <p>You can download the full ESG documentation below:</p>
 
     <ul>
