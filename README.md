@@ -2,7 +2,7 @@
 
 🚀 **Live Deployment (AWS)**  
 - **Environment:** Production  
-- **URL:** https://YOUR-AWS-URL-HERE  
+- **URL:** [http://18.217.148.44:5173/](http://18.217.148.44:5173/)
 
 A full-stack ESG (Environmental, Social, Governance) scoring and emissions analysis platform designed for **company-level ESG screening, climate accounting, and risk assessment**.
 
@@ -106,7 +106,7 @@ This application is built using a modern **full-stack JavaScript architecture** 
 
 ## Calculations
 
-### 3.1 Standards and Methodology
+### Standards and Methodology
 
 #### Greenhouse Gas Accounting
 The emissions calculator follows principles from the **Greenhouse Gas Protocol**, including:
@@ -120,7 +120,7 @@ The ESG scoring model is informed by the structure of the **European Investment 
 
 ---
 
-### 3.2 ESG Assessment Structure
+### ESG Assessment Structure
 
 The framework adapts recognized standards into **12 structured assessment sections**:
 
