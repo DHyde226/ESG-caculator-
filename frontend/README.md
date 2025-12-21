@@ -1,70 +1,214 @@
-# Getting Started with Create React App
+# ESG Scoring & Emissions Platform
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+🚀 **Live Deployment (AWS)**  
+- **Environment:** Production  
+- **URL:** https://YOUR-AWS-URL-HERE  
 
-## Available Scripts
+A full-stack ESG (Environmental, Social, Governance) scoring and emissions analysis platform designed for **company-level ESG screening, climate accounting, and risk assessment**.
 
-In the project directory, you can run:
 
-### `npm start`
+A full-stack ESG (Environmental, Social, Governance) scoring and emissions analysis platform designed for **company-level ESG screening, climate accounting, and risk assessment**.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The system combines structured ESG questionnaires with automated scoring, greenhouse gas calculations, and weighted aggregation to produce **transparent, reproducible ESG scores** aligned with internationally recognized frameworks.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+---
 
-### `npm test`
+## Overview
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+This application enables companies to:
 
-### `npm run build`
+- Submit structured ESG data through a web interface
+- Automatically calculate **Scope 1, Scope 2, and Scope 3 emissions**
+- Generate ESG scores across **12 assessment sections**
+- View historical submissions and results
+- Export results for reporting and auditing (Excel)
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+The platform is designed for **internal assessment, screening, and comparative analysis**, with a strong emphasis on transparency, auditability, and consistency.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+---
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Architecture
 
-### `npm run eject`
+### 2.1 Technology Used
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+This application is built using a modern **full-stack JavaScript architecture** designed for scalability, security, and maintainability.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+#### Frontend
+- **React**
+- Component-based UI with dynamic forms and conditional inputs
+- State managed using React hooks
+- API communication via **Axios**
+- Supports ESG form submission, history views, and data export
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+#### Backend
+- **Node.js + Express**
+- RESTful API for authentication, ESG submissions, scoring, and history
+- **JWT-based authentication** for secure, multi-tenant access
+- Centralized ESG scoring engine
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+#### Database
+- **MongoDB** with **Mongoose**
+- Stores:
+  - Company accounts
+  - ESG submissions (raw inputs)
+  - Calculated scores and emissions
+  - Historical records linked to each company
 
-## Learn More
+#### ESG Scoring & Emissions Logic
+- Custom backend scoring engine
+- Independent scoring of Sections 1–12
+- Scope 1, 2, and 3 emissions calculated programmatically
+- Emissions aggregated into total **tCO₂e**
+- Results stored alongside raw inputs for auditability
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+#### Containerization & Environment
+- **Docker** for consistent development and deployment
+- Environment variables used for configuration and secrets
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+### 2.2 System Structure
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+#### Frontend (React)
+- Handles registration, login, ESG form submission, and history viewing
+- Sends JSON requests to the backend
+- Includes JWT in the `Authorization: Bearer` header for protected routes
 
-### Analyzing the Bundle Size
+#### Authentication Flow
+- `/register` and `/login` routes issue signed JWTs
+- Tokens represent the authenticated company
+- Required for all ESG-related actions
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+#### JWT Middleware
+- Verifies token validity
+- Extracts `companyId`
+- Attaches identity to `req.user`
+- Enforces strict multi-tenant data isolation
 
-### Making a Progressive Web App
+#### ESG Routes
+- `POST /esg-score`
+- `GET /history`
+- `DELETE /history/:id`
+- Accessible only after authentication
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+#### Controllers
+- Handle validation, ownership checks, and orchestration
+- Coordinate between scoring logic and database operations
 
-### Advanced Configuration
+#### ESG Calculator (Scoring Engine)
+- Scores Sections 1–12 independently
+- Applies predefined weights
+- Handles non-applicable sections
+- Normalizes final score
+- Assigns ESG grade
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+---
 
-### Deployment
+## Calculations
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+### 3.1 Standards and Methodology
 
-### `npm run build` fails to minify
+#### Greenhouse Gas Accounting
+The emissions calculator follows principles from the **Greenhouse Gas Protocol**, including:
+- Scope 1, Scope 2, and Scope 3 categorization
+- Standardized carbon accounting logic
+- Emissions expressed in **tCO₂e**
+- Emphasis on data quality and uncertainty awareness
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+#### ESG Risk Framework
+The ESG scoring model is informed by the structure of the **European Investment Bank (EIB) Environmental and Social Standards**, covering environmental, social, governance, and climate-related risks.
+
+---
+
+### 3.2 ESG Assessment Structure
+
+The framework adapts recognized standards into **12 structured assessment sections**:
+
+1. Company Information  
+2. Environmental & Social Risk Management  
+3. Stakeholder Engagement & Disclosure  
+4. Resource Efficiency & Pollution Prevention  
+5. Biodiversity & Ecosystems  
+6. Climate Change & Greenhouse Gas Emissions  
+7. Land Acquisition & Involuntary Resettlement  
+8. Indigenous Peoples, Gender & Vulnerable Groups  
+9. Labour & Working Conditions  
+10. Occupational Health, Safety & Security  
+11. Cultural Heritage  
+12. Financial Institutions & Financed Emissions  
+13. Governance, Ethics & Cybersecurity  
+
+Each section produces a **0–100 score** and may be marked **not applicable**.
+
+---
+
+## Final ESG Score Calculation
+
+### Section Scoring
+Each ESG section produces:
+- A score between **0 and 100**
+- A **not applicable** flag when the section does not apply
+
+Non-applicable sections are excluded from the final calculation.
+
+---
+
+### Section Weighting
+
+| ESG Section | Weight |
+|------------|--------|
+| Environmental & Social Risk Management | 8% |
+| Stakeholder Engagement & Disclosure | 8% |
+| Resource Efficiency & Pollution Prevention | 15% |
+| Biodiversity & Ecosystems | 8% |
+| **Climate Change & GHG Emissions** | **25%** |
+| Land Acquisition & Involuntary Resettlement | 6% |
+| Indigenous Peoples, Gender & Vulnerable Groups | 6% |
+| Labour & Working Conditions | 8% |
+| Occupational Health, Safety & Security | 6% |
+| Cultural Heritage | 4% |
+| Financial Institutions & Financed Emissions | 4% |
+| Governance, Ethics & Cybersecurity | 8% |
+
+---
+
+### Weighted Aggregation
+
+For each applicable section:
+- Section score × section weight
+- All weighted scores are summed
+- Total is normalized by applicable weights
+
+This ensures:
+- Fair comparison across companies
+- No penalty for non-applicable risks
+- Greater influence from high-impact areas
+
+---
+
+### Final Score and Grade
+
+The result is a final ESG score (**0–100**, rounded).
+
+| Score | Grade |
+|------|------|
+| ≥ 85 | A |
+| ≥ 70 | B |
+| ≥ 55 | C |
+| < 55 | High Risk |
+
+---
+
+## Output
+
+For each submission, the platform provides:
+- Section-level scores and breakdowns
+- Final ESG score and grade
+- Scope 1, 2, and 3 emissions (tCO₂e)
+- Total emissions
+- Historical comparison
+- Exportable Excel results
+
+---
+
+

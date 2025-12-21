@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
+import styles from "../styles/ESGForm.module.css";
+
 
 const ESGForm = ({ token, companyId, companyName }) => {
   const [formData, setFormData] = useState({
@@ -625,13 +627,13 @@ const subsectionLabels = {
 
 
   scope2_electricityPurchased_kWh:
-    "Purchased electricity consumption (Scope 2, kWh)",
+    "Purchased electricity consumption (kWh)",
   scope2_region:
     "Which electricity grid region applies?",
   scope2_heat_kWh:
-    "Purchased heat consumption (Scope 2, kWh)",
+    "Purchased heat consumption (kWh)",
   scope2_cooling_kWh:
-    "Purchased cooling consumption (Scope 2, kWh)",
+    "Purchased cooling consumption (kWh)",
   scope2_renewableSharePercent:
     "What percentage of Scope 2 energy is renewable?",
 
@@ -959,47 +961,52 @@ const renderField = (section, subsection, field, value) => {
   };
 
   return (
-    <div>
-      <h2>ESG Questionnaire{companyName}</h2>
+<div className={styles.container}>
+  <h2 className={styles.title}>
+    ESG Questionnaire {companyName}
+  </h2>
 
-      <form onSubmit={handleSubmit}>
-        <label>
-          Reporting Date:
-          <input
-            type="date"
-            value={formData.Section0.CompanyInformation.reportingDate}
-            onChange={handleDateChange}
-          />
-        </label>
+  <form onSubmit={handleSubmit} className={styles.form}>
+    {/* Reporting Date */}
+    <div className={styles.field}>
+      <label>
+        Reporting Date
+        <input
+          type="date"
+          value={formData.Section0.CompanyInformation.reportingDate}
+          onChange={handleDateChange}
+        />
+      </label>
+    </div>
 
-        {Object.entries(formData).map(([sectionKey, sectionValue]) => (
-          <fieldset key={sectionKey} style={{ marginBottom: "1em" }}>
-            <legend>{sectionLabels[sectionKey] || sectionKey}</legend>
+    {Object.entries(formData).map(([sectionKey, sectionValue]) => (
+      <fieldset key={sectionKey} className={styles.section}>
+        <legend className={styles.sectionLegend}>
+          {sectionLabels[sectionKey] || sectionKey}
+        </legend>
 
-            {Object.entries(sectionValue).map(([subKey, subValue]) => (
-              <fieldset
-                key={subKey}
-                style={{
-                  padding: "10px",
-                  marginLeft: "20px",
-                  borderLeft: "3px solid #ccc",
-                }}
-              >
-                <legend>{subsectionLabels[subKey] || subKey}</legend>
+        {Object.entries(sectionValue).map(([subKey, subValue]) => (
+          <fieldset key={subKey} className={styles.subsection}>
+            <legend className={styles.subsectionLegend}>
+              {subsectionLabels[subKey] || subKey}
+            </legend>
 
-                {Object.entries(subValue).map(([field, value]) => (
-                  <div key={field} style={{ marginBottom: "6px" }}>
-                    {renderField(sectionKey, subKey, field, value)}
-                  </div>
-                ))}
-              </fieldset>
+            {Object.entries(subValue).map(([field, value]) => (
+              <div key={field} className={styles.field}>
+                {renderField(sectionKey, subKey, field, value)}
+              </div>
             ))}
           </fieldset>
         ))}
+      </fieldset>
+    ))}
 
-        <button type="submit">Submit</button>
-      </form>
-    </div>
+    <button type="submit" className={styles.submitButton}>
+      Submit ESG Questionnaire
+    </button>
+  </form>
+</div>
+
   );
 };
 

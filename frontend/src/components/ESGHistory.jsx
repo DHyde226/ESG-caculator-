@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import ExcelJS from "exceljs";
 import { saveAs } from "file-saver";
+import styles from "../styles/ESGHistory.module.css";
 
 const ESGHistory = ({ token }) => {
   const [history, setHistory] = useState([]);
@@ -82,19 +83,18 @@ const ESGHistory = ({ token }) => {
 
     history.forEach((entry) => {
       const totalEmissions = Number(
-        entry.results?.sections?.section5?.breakdown?.totals?.currentTotal_tCO2e
-
+        entry.results?.sections?.section5?.breakdown?.totals
+          ?.currentTotal_tCO2e
       );
 
       sheet.addRow({
         submissionDate: new Date(
           entry.submissionDate || entry.createdAt
         ).toLocaleDateString("en-CA"),
-
         totalScore: Number(entry?.results?.totalScore) || 0,
         grade: entry?.results?.grade || "N/A",
         currentTotal_tCO2e:
-          totalEmissions === undefined || Number.isNaN(totalEmissions)
+          Number.isNaN(totalEmissions) || totalEmissions === undefined
             ? 0
             : totalEmissions,
         results: JSON.stringify(entry.results),
@@ -110,25 +110,29 @@ const ESGHistory = ({ token }) => {
     saveAs(blob, "ESG_History.xlsx");
   };
 
-  if (loading) return <p>Loading history...</p>;
-  if (error) return <p style={{ color: "red" }}>{error}</p>;
+  if (loading) return <p className={styles.loading}>Loading history...</p>;
+  if (error) return <p className={styles.error}>{error}</p>;
 
   return (
-    <div>
-      <h2>ESG Score History</h2>
+    <div className={styles.container}>
+      <h2 className={styles.title}>ESG Score History</h2>
 
-      <button onClick={exportToExcel} style={{ marginBottom: "15px" }}>
-        📊 Download Excel
+      <button
+        onClick={exportToExcel}
+        className={styles.button}
+        style={{ marginBottom: "15px" }}
+      >
+        Download Excel
       </button>
 
       {history.length === 0 ? (
-        <p>No history yet.</p>
+        <p className={styles.empty}>No history yet.</p>
       ) : (
-        <ul>
+        <ul className={styles.list}>
           {history.map((entry) => {
             const totalEmissionsRaw =
-              entry.results?.sections?.section5?.breakdown?.totals?.currentTotal_tCO2e
-
+              entry.results?.sections?.section5?.breakdown?.totals
+                ?.currentTotal_tCO2e;
 
             const totalEmissions =
               totalEmissionsRaw === undefined || totalEmissionsRaw === null
@@ -136,22 +140,30 @@ const ESGHistory = ({ token }) => {
                 : Number(totalEmissionsRaw);
 
             return (
-              <li key={entry._id} style={{ marginBottom: "10px" }}>
-                <strong>Score:</strong>{" "}
-                {Number(entry?.results?.totalScore) || 0} (
-                <strong>{entry?.results?.grade || "N/A"}</strong>)
+              <li key={entry._id} className={styles.item}>
+                <span className={styles.label}>Score:</span>{" "}
+                <span className={styles.value}>
+                  {Number(entry?.results?.totalScore) || 0} (
+                  <strong>{entry?.results?.grade || "N/A"}</strong>)
+                </span>
                 <br />
-                <strong>Total tCO₂e:</strong> {totalEmissions}
+
+                <span className={styles.label}>Total tCO₂e:</span>{" "}
+                <span className={styles.value}>{totalEmissions}</span>
                 <br />
-                <strong>Reporting Date:</strong>{" "}
-                {new Date(
-                  entry.submissionDate || entry.createdAt
-                ).toLocaleDateString("en-CA")}
+
+                <span className={styles.label}>Reporting Date:</span>{" "}
+                <span className={styles.value}>
+                  {new Date(
+                    entry.submissionDate || entry.createdAt
+                  ).toLocaleDateString("en-CA")}
+                </span>
 
                 <br />
+
                 <button
                   onClick={() => handleDelete(entry._id)}
-                  style={{ marginTop: "5px" }}
+                  className={`${styles.button} ${styles.deleteButton}`}
                 >
                   Delete
                 </button>

@@ -1,0 +1,89 @@
+/* Base layout */
+.about-container {
+  padding: 2rem 1.5rem;
+  max-width: 900px;
+  margin: 0 auto;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #1f2933; /* dark neutral */
+  line-height: 1.65;
+}
+
+/* Headings */
+.about-container h1 {
+  font-size: 2rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.5rem;
+}
+
+.about-container h2 {
+  font-size: 1.35rem;
+  font-weight: 600;
+  margin-top: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.about-container h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Paragraphs */
+.about-container p {
+  margin-bottom: 1rem;
+  color: #374151;
+}
+
+/* Lists */
+.about-container ul {
+  margin-left: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.about-container li {
+  margin-bottom: 0.4rem;
+  color: #374151;
+}
+
+/* Strong text */
+.about-container strong {
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Links */
+.about-container a {
+  color: #2563eb;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.about-container a:hover {
+  text-decoration: underline;
+}
+
+/* Download section */
+.about-container .download-section {
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e5e7eb;
+}
+
+/* Responsive tweaks */
+@media (max-width: 640px) {
+  .about-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .about-container h1 {
+    font-size: 1.75rem;
+  }
+
+  .about-container h2 {
+    font-size: 1.2rem;
+  }
+}

@@ -1,0 +1,140 @@
+/* =========================
+   GLOBAL LAYOUT
+========================= */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: #1f2933;
+}
+
+.title {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 0.5rem;
+}
+
+/* =========================
+   FORM
+========================= */
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+/* =========================
+   SECTIONS
+========================= */
+.section {
+  margin-bottom: 2rem;
+  padding: 1rem;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  background-color: #ffffff;
+}
+
+.sectionLegend {
+  font-weight: 600;
+  font-size: 1.1rem;
+  padding: 0 0.5rem;
+}
+
+/* =========================
+   SUBSECTIONS
+========================= */
+.subsection {
+  margin-top: 1rem;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid #2563eb;
+  background-color: #f9fafb;
+}
+
+.subsectionLegend {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 0.5rem;
+}
+
+/* =========================
+   FIELDS
+========================= */
+.field {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.75rem;
+}
+
+.field label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 0.25rem;
+  color: #111827;
+}
+
+/* Inputs */
+.field input,
+.field select {
+  padding: 0.4rem 0.5rem;
+  font-size: 0.85rem;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  background-color: #ffffff;
+}
+
+.field input:focus,
+.field select:focus {
+  outline: none;
+  border-color: #2563eb;
+}
+
+/* =========================
+   RADIO GROUPS (YES / NO)
+========================= */
+.radioGroup {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.25rem;
+}
+
+.radioGroup label {
+  font-weight: 400;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+.submitButton {
+  margin-top: 2rem;
+  align-self: flex-start;
+  background-color: #2563eb;
+  color: #ffffff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submitButton:hover {
+  background-color: #1e40af;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+  .container {
+    padding: 1.5rem 1rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+}

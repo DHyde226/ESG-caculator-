@@ -1,7 +1,9 @@
 import React from "react";
+import "../styles/About.css";
+
 
 const About = () => (
-  <div style={{ padding: "1rem", maxWidth: "900px", margin: "auto" }}>
+  <div  className="about-container">
     <h1>About the ESG Scoring Application</h1>
 
     <h2>1. Mission Statement</h2>
@@ -148,6 +150,7 @@ const About = () => (
         Docker Compose orchestrates all services into a unified environment.
       </li>
     </ul>
+    <div className="download-section">
         <h2>Download ESG Documentation</h2>
     <p>You can download the full ESG documentation below:</p>
 
@@ -171,6 +174,7 @@ const About = () => (
         </a>
       </li>
     </ul>
+    </div>
 
   </div>
 );
