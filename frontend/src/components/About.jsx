@@ -157,20 +157,11 @@ const About = () => (
     <ul>
       <li>
         <a 
-          href="/ESG_documentation_English.pdf"
+          href="/ESG_documentation.pdf"
           download 
           style={{ color: "#007bff", textDecoration: "underline" }}
         >
-          Download ESG Documentation (English)
-        </a>
-      </li>
-      <li>
-        <a 
-          href="/ESG_documentation_Croatian.pdf"
-          download 
-          style={{ color: "#007bff", textDecoration: "underline" }}
-        >
-          Download ESG Documentation (Croatian)
+          Download ESG Documentation
         </a>
       </li>
     </ul>
